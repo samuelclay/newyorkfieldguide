@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load compressed typogrify highlight %}
+
+{% block content %}
+
+{% filter typogrify %}
+  <div class="photoset-detail">
+    
+    <div class="splash-header">
+      <h1 class="splash-big"><a href="{% url index %}">New York <span class="highlight highlight-title">Field Guide</span></a></h1>
+      <h3 class="splash-small">Historic Districts <span class="highlight highlight-title">of</span> New York City</h3>  
+    </div>
+    
+    <div class="photoset-info">
+      <div class="photoset-title">
+        {% filter highlight:'Historic District' %}
+          <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+        {% endfilter %}
+      </div>
+      <div class="photoset-subtitle">{{ post.subtitle }}</div>
+      <div class="photoset-count"><span class="photoset-count-number">{{ post.photo_set.photos.count }}</span> photos</div>
+    </div>
+    
+    
+    <ul class="photoset-photos">
+    {% for photo in post.photo_set.photos.all %}
+      <li class="photo-detail">
+        <img src="{{ photo.get_large_url }}" />
+      </li>
+    {% endfor %}  
+    </ul>
+    
+    <div class="photoset-map-container">
+      <script>
+      $(document).ready(function() {
+            var map = new GMap2(document.getElementById("map_canvas_{{ forloop.counter }}")); 
+            var geoXml = new GGeoXml("http://maps.google.com/maps/ms?ie=UTF8&hl=en&msa=0&output=nl&msid=116208418513892880794.000480206e4027e04ae53");
+            map.addControl(new GSmallZoomControl3D());
+            map.setMapType(G_PHYSICAL_MAP);
+            map.setCenter(new GLatLng({{ post.coordinates }}), {{ post.zoom }}); 
+            map.addOverlay(geoXml);
+      });
+      </script>
+      <div id="map_canvas_{{ forloop.counter }}" class="photoset-map"></div>
+    </div>
+    
+  
+  </div>
+
+{% endfilter %}
+
+{% endblock content %}

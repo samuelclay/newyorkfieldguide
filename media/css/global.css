@@ -1,0 +1,193 @@
+/* ============== */
+/* = Typography = */
+/* ============== */
+
+.amp, .highlight {
+    font-size:1.05em;
+    font-family:"Warnock Pro", "Goudy Old Style","Palatino","Book Antiqua",serif; 
+    font-style:italic;
+    font-weight: bold;
+}
+.amp {
+    color: #A0A0A0;
+}
+.highlight-title {
+    font-weight: normal;
+}    
+.dquo {margin-left:-.38em;}
+
+/* ========== */
+/* = Global = */
+/* ========== */
+
+body, ul {
+    font-family: 'Helvetica Neue', HelveticaNeue, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    background-color: #202020;
+    color: #E6E6E6;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#content {
+    margin: 0 auto 5em;
+    width: 800px;
+    overflow: hidden;
+    
+}
+
+/* ========== */
+/* = Header = */
+/* ========== */
+
+.splash-header {
+    margin: 64px 0;
+    font-size: 24px;
+}
+
+.splash-big {
+    font-size: 28px;
+    display: inline;
+    font-weight: bold;
+}
+.splash-small {
+    font-size: 16px;
+    color: #A0A0A0;
+    display: inline;
+    font-weight: normal;
+    text-shadow: 0px 1px 1px #333;
+    margin-left: 8px;
+}
+
+/* ========= */
+/* = Links = */
+/* ========= */
+
+.photosets .photoset-info a,
+.photoset-detail .photoset-info a {
+    text-decoration: none;
+    color: #E6E6E6;
+    padding: 48px 0 0 0;
+}
+
+.photosets .photoset-info a:hover,
+.photoset-detail .photoset-info a:hover {
+    color: #D44619;
+    text-decoration: none;
+}
+
+/* ================== */
+/* = Photoset Posts = */
+/* ================== */
+
+.photoset {
+    clear: both;
+    overflow: hidden;
+    margin: 0 0 48px 0;
+}
+
+
+/* Photoset Info */
+
+.photoset-info {
+    padding: 0 0 4px 0;
+    margin: 12px 0 8px;
+    border-bottom: 1px solid #606060;
+}
+
+.photoset-info .photoset-title {
+    font-size: 20px;
+    font-weight: bold;
+    display: inline;
+}
+
+.photoset-info .photoset-subtitle {
+    font-size: 14px;
+    color: #A0A0A0; 
+    display: inline;
+    margin-left: 8px;
+}
+
+.photoset-info .photoset-count {
+    color: #404040;
+    float: right;
+    font-size: 12px;
+    line-height: 28px;
+    text-transform: uppercase;
+}
+
+.photoset-info .photoset-count-number {
+    font-weight: bold;
+}
+
+/* Photoset Photos */
+
+.photoset .photoset-photos {
+    line-height: 0px;
+    overflow: hidden;
+    margin-left: 24px;
+    position: relative;
+    float: left;
+}
+
+.photoset .photoset-photos img {
+    line-height: 0px;
+    float: left;
+    margin: 0 6px 6px 0;
+    width: 75px;
+    height: 75px;
+}
+
+.photoset .photoset-photos img.first {
+    clear: left;
+}
+
+
+/* Photoset Map */
+
+.photosets .photoset-map-container {
+    float: left;
+    margin-left: 24px;
+}
+
+.photosets .photoset-map {
+    width: 428px;
+    height: 237px;
+    background-color: #202020 !important;
+}
+
+/* =================== */
+/* = Photoset Detail = */
+/* =================== */
+
+.photoset-detail {
+    
+}
+
+
+.photoset-detail .photoset-photos .photo-detail {
+    margin: 24px 0;
+}
+
+.photoset-detail .photoset-photos .photo-detail img {
+    max-width: 798px;
+    border: 1px solid #000;
+}
+
+
+/* Photoset Map */
+
+.photoset-detail .photoset-map-container {
+    float: left;
+}
+
+.photoset-detail .photoset-map {
+    width: 798px;
+    height: 298px;
+    border: 1px solid #000;
+    background-color: #202020 !important;
+}

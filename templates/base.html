@@ -1,0 +1,21 @@
+{% load compressed typogrify %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+  <meta http-equiv="imagetoolbar" content="no" />
+  {% block meta %}{% endblock %}
+  <title>New York Field Guide - {% block title %}Historic Architecture{% endblock %}</title>
+  <link rel="icon" href="{{ MEDIA_URL }}images/favicon.ico" />
+  {% compressed_css 'global' %}
+  {% compressed_js 'common' %}
+    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAALPrVZ2XoxUkCpRj5Bx5pQhSpVo_X8WafOyOBej8hr_9Y8RYTuRR4F5aWTAPtDTsWBEr1CmPTdcA2iA" type="text/javascript"></script>
+  {# <!--[if IE]>{% compressed_css 'ie_only' %}<![endif]--> #}
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <div id="content">
+    {% block content %}{% endblock content %}
+  </div>
+</body>
+</html>
