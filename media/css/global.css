@@ -35,9 +35,13 @@ ul {
 
 #content {
     margin: 0 auto 5em;
-    width: 800px;
-    overflow: hidden;
     
+}
+
+.content {
+    width: 800px;
+    margin: 0 auto;
+    overflow: hidden;
 }
 
 /* ========== */
@@ -87,7 +91,7 @@ ul {
 .photoset {
     clear: both;
     overflow: hidden;
-    margin: 0 0 48px 0;
+    margin: 0 auto 48px auto;
 }
 
 
@@ -170,7 +174,7 @@ ul {
 
 
 .photoset-detail .photoset-photos .photo-detail {
-    margin: 24px 0;
+    margin: 24px auto;
 }
 
 .photoset-detail .photoset-photos .photo-detail img {
@@ -190,4 +194,34 @@ ul {
     height: 298px;
     border: 1px solid #000;
     background-color: #202020 !important;
+}
+
+/* ============ */
+/* = Callouts = */
+/* ============ */
+
+.callout {
+    margin: 24px 0;
+    padding: 24px 0;
+    overflow: hidden;
+    border-top: 2px solid #000;
+    border-bottom: 2px solid #000;
+    background-color: #E0E0E0;
+    color: #202020;
+    font-family: Baskerville, Garamond, Georgia, serif;
+}
+
+.callout .callout-content {
+    font-size: 32px;
+    line-height: 40px;
+    color: #707070;
+}
+
+.callout .callout-image {
+    float: right;
+    margin: 0 0 0 6px;
+}
+
+.callout .callout-image img {
+    border: 1px solid #000;
 }

@@ -62,9 +62,15 @@ class Callout(models.Model):
     post = models.ForeignKey(Post)
     content = models.TextField(null=True, blank=True)
     content_type = models.CharField(max_length=50,
-                                    default=CUTOUT,
+                                    default=BACKGROUND,
                                     choices=CALLOUT_CHOICES)
     order = models.IntegerField(default=1)
     link = models.TextField(null=True, blank=True)
     quote_speaker = models.CharField(max_length=255, null=True, blank=True)
     detail_image_url = models.URLField(null=True, blank=True)
+
+    def __unicode__(self):
+        return "[#%s] %s" % (
+            self.order,
+            self.post,
+        )
