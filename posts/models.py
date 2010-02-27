@@ -65,6 +65,7 @@ class Callout(models.Model):
                                     default=BACKGROUND,
                                     choices=CALLOUT_CHOICES)
     order = models.IntegerField(default=1)
+    date = models.DateTimeField()
     link = models.TextField(null=True, blank=True)
     quote_speaker = models.CharField(max_length=255, null=True, blank=True)
     detail_image_url = models.URLField(null=True, blank=True)

@@ -20,3 +20,6 @@ def post_detail(request, slug):
         'post': post,
         'callouts': callouts,
     })
+    
+def photo_detail(request, slug, **kwargs):
+    pass
