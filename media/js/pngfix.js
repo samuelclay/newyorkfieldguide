@@ -1,5 +1,5 @@
 var blank = new Image();
-blank.src = '/m/images/blank.gif';
+blank.src = '/media/images/blank.gif';
 
 $(document).ready(function() {
     var badBrowser = (/MSIE ((5\.5)|6)/.test(navigator.userAgent) && navigator.platform == "Win32");
