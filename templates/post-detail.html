@@ -36,6 +36,9 @@
             {% if callout.detail_image_url %}
               <div class="callout-image"><img src="{{ callout.detail_image_url}}" /></div>
             {% endif %}
+            {% if callout.date %}
+              <div class="callout-date">{{ callout.date|date:"F d"}}<span class="nth">{{ callout.date|date:"S" }}</span>, {{ callout.date|date:"Y" }}</div>
+            {% endif %}
             <div class="callout-content">
               {{ callout.content|safe }}
             </div>

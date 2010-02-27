@@ -9,6 +9,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     url(r'^$', posts_views.index, name='index'),
+    url(r'^photo/(?P<slug>[\w-]+)(?P<year>[\d-]+)(?P<day>[\d-]+)(?P<month>[\d-]+)/$', posts_views.photo_detail, name='photo_detail'),
     url(r'^(?P<slug>[\w-]+)/$', posts_views.post_detail, name='post-detail'),
     
 )
