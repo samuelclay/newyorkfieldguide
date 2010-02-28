@@ -80,7 +80,7 @@ ul {
 }
 
 .photosets .photoset-info a:hover,
-.photoset-detail .photoset-info a:hover,
+.photoset-info a:hover,
 .photoset-info .photoset-title.hover a {
     color: #D44619;
     text-decoration: none;
