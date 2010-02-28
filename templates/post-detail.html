@@ -5,24 +5,9 @@
 
 {% filter typogrify %}
   <div class="photoset-detail">
-    
-    <div class="content">
-      <div class="splash-header">
-        <h1 class="splash-big"><a href="{% url index %}">New York <span class="highlight highlight-title">Field Guide</span></a></h1>
-        <h3 class="splash-small">Historic Districts <span class="highlight highlight-title">of</span> New York City</h3>  
-      </div>
-    </div>
 
     <div class="content">
-      <div class="photoset-info">
-        <div class="photoset-title">
-          {% filter highlight:'Historic District' %}
-            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
-          {% endfilter %}
-        </div>
-        <div class="photoset-subtitle">{{ post.subtitle }}</div>
-        <div class="photoset-count"><span class="photoset-count-number">{{ post.photo_set.photos.count }}</span> photos</div>
-      </div>
+      {% photoset_info post %}
     </div>
     
     <ul class="photoset-photos">
@@ -83,3 +68,23 @@
 {% endfilter %}
 
 {% endblock content %}
+
+{% block footer_post_borough %}
+  {% if footer_post_borough %}
+    <div class="footer-post-subtitle">Elsewhere in {{ footer_post_borough.get_borough_display }}...</div>
+    {% photoset_info footer_post_borough %}
+    <div class="footer-photos photo-thumbs">
+      {% photo_thumbs footer_post_borough 4 8 %}
+    </div>
+  {% endif %}
+{% endblock footer_post_borough %}
+
+{% block footer_post_elsewhere %}
+  {% if footer_post_elsewhere %}
+    <div class="footer-post-subtitle">Elsewhere in New York City...</div>
+    {% photoset_info footer_post_elsewhere %}
+    <div class="footer-photos photo-thumbs">
+      {% photo_thumbs footer_post_elsewhere 4 8 %}
+    </div>
+  {% endif %}
+{% endblock footer_post_elsewhere %}

@@ -47,6 +47,7 @@ class Post(models.Model):
         return ('post-detail', (), {'slug': self.slug})
 
 
+
 class Callout(models.Model):
     DETAIL = 'detail'
     BACKGROUND = 'background'

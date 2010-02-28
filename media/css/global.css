@@ -35,7 +35,7 @@ ul {
 
 #content {
     margin: 0 auto 5em;
-    
+    overflow: hidden;
 }
 
 .content {
@@ -110,6 +110,10 @@ ul {
     display: inline;
 }
 
+.photoset-info .photoset-title.hover a {
+    text-decoration: underline;
+}
+
 .photoset-info .photoset-subtitle {
     font-size: 14px;
     color: #A0A0A0; 
@@ -131,7 +135,7 @@ ul {
 
 /* Photoset Photos */
 
-.photoset .photoset-photos {
+.photo-thumbs {
     line-height: 0px;
     overflow: hidden;
     margin-left: 24px;
@@ -139,16 +143,20 @@ ul {
     float: left;
 }
 
-.photoset .photoset-photos img {
+.photo-thumbs img {
     line-height: 0px;
     float: left;
-    margin: 0 6px 6px 0;
+    padding: 0 6px 6px 0;
+    margin: 0;
     width: 75px;
     height: 75px;
 }
 
-.photoset .photoset-photos img.first {
+.photo-thumbs img.first {
     clear: left;
+}
+.photo-thumbs img.last {
+    padding-right: 0px;
 }
 
 
@@ -240,4 +248,37 @@ ul {
 
 .callout .callout-image img {
     border: 1px solid #000;
+}
+
+/* ========== */
+/* = Footer = */
+/* ========== */
+
+#footer {
+    margin: 64px auto;
+    font-size: 24px;
+    padding: 12px 0 4px 0;
+    border-top: 1px solid #606060;
+}
+
+.footer-post {
+    width: 366px;
+    float: left;
+    margin: 24px 0;
+}
+
+.footer-post.last {
+    margin-right: 0px;
+    float: right;
+}    
+
+.footer-post .footer-post-subtitle {
+    color:#96AAC0;
+    font-size:22px;
+    margin-bottom:24px;
+    margin-top:48px;
+}
+
+.footer-post .photo-thumbs {
+    margin-right: 24px;
 }

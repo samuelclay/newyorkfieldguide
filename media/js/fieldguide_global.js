@@ -231,8 +231,18 @@ FIELDGUIDE.log = function(msg) {
 // =====================
 
 (function($) {
-$(document).ready(function() {
+    $(document).ready(function() {
+        $(".photo-thumbs img").hover(function() {
+            var $info = $(this).parents('.photo-thumbs')
+                               .prevAll('.photoset-info')
+                               .find('.photoset-title');            
+            $info.addClass('hover');
+        }, function() {
+            var $info = $(this).parents('.photo-thumbs')
+                               .prevAll('.photoset-info')
+                               .find('.photoset-title');
+            $info.removeClass('hover');
+        });
     
-    
-});
+    });
 })(jQuery);

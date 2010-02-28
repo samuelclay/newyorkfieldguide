@@ -1,0 +1,3 @@
+{% for photo in photos %}
+  <a href="{{ post.get_absolute_url }}"><img src="{{ photo.get_square_url }}" class="{% if forloop.counter0|divisibleby:per_row %}first{% endif %}{% if forloop.counter|divisibleby:per_row %}last{% endif %}" /></a>
+{% endfor %}  

@@ -6,32 +6,14 @@
 {% filter typogrify %}
   <div id="splash">
     
-    <div class="content">
-      <div class="splash-header">
-        <h1 class="splash-big"><a href="{% url index %}">New York <span class="highlight highlight-title">Field Guide</span></a></h1>
-        <h3 class="splash-small">Historic Districts <span class="highlight highlight-title">of</span> New York City</h3>  
-      </div>
-    </div>
-    
     <ul class="posts photosets">
       {% for post in posts %}
         <li class="photoset content">
           
-          <div class="photoset-info">
-            <div class="photoset-title">
-              {% filter highlight:'Historic District' %}
-                <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
-              {% endfilter %}
-            </div>
-            <div class="photoset-subtitle">{{ post.subtitle }}</div>
-            <div class="photoset-count"><span class="photoset-count-number">{{ post.photo_set.photos.count }}</span> photos</div>
-          </div>
+          {% photoset_info post %}
           
-          
-          <div class="photoset-photos">
-          {% for photo in post.photo_set.photos.all|slice:"0:12" %}
-            <img src="{{ photo.get_square_url }}" {% if forloop.counter0|divisibleby:"4" %}class="first"{% endif %} />
-          {% endfor %}  
+          <div class="photoset-photos photo-thumbs">
+            {% photo_thumbs post 4 12 %}
           </div>
           
           <div class="photoset-map-container">
