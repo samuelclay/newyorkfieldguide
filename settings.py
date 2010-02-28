@@ -21,8 +21,8 @@ LANGUAGE_CODE = 'en-us'
 SITE_ID = 1
 USE_I18N = False
 MEDIA_ROOT = here('media')
-MEDIA_URL = '/m/'
-ADMIN_MEDIA_PREFIX = '/media/'
+MEDIA_URL = '/media/'
+ADMIN_MEDIA_PREFIX = '/media/admin/'
 ROOT_URLCONF = 'urls'
 
 

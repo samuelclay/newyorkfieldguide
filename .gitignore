@@ -2,3 +2,6 @@
 local_settings.py
 .svn
 .DS_Store
+logs*
+media/*/*.r*.*
+media/media
