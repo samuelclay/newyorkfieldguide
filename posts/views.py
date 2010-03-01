@@ -14,12 +14,14 @@ def index(request):
     
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
+    photos = post.photo_set.photos.all().order_by('order')
     callouts = Callout.objects.filter(post=post)
     footer_post_borough = get_random_post(post, 'borough')
     footer_post_elsewhere = get_random_post(post, 'elsewhere')
     
     return respond(request, 'post-detail.html', {
         'post': post,
+        'photos': photos,
         'callouts': callouts,
         'footer_post_borough': footer_post_borough,
         'footer_post_elsewhere': footer_post_elsewhere,

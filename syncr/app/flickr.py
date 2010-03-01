@@ -175,7 +175,7 @@ class FlickrSyncr:
         except KeyError:
             return ''
 
-    def _syncPhoto(self, photo_xml, refresh=False):
+    def _syncPhoto(self, photo_xml, refresh=False, index=0):
         """
         Synchronize a flickr photo with the Django backend.
 
@@ -228,6 +228,7 @@ class FlickrSyncr:
             'owner_nsid': photo_xml.photo[0].owner[0]['nsid'],
             'title': photo_xml.photo[0].title[0].text, # TODO: Typography
             'slug': slug,
+            'order': index,
             'description': photo_xml.photo[0].description[0].text,
             'taken_date': taken_date,
             'upload_date': upload_date,
@@ -277,7 +278,7 @@ class FlickrSyncr:
             flickr_id = photo_xml.photo[0]['id'], defaults=default_dict)
 
         # update if something changed
-        if obj.update_date < update_date:
+        if obj.update_date < update_date or obj.order != index:
             # Never overwrite URL-relevant attributes
             default_dict['slug'] = obj.slug
             default_dict['taken_date'] = obj.taken_date
@@ -294,7 +295,7 @@ class FlickrSyncr:
                                         flickr_id=c['flickr_id'], defaults=c)
         return obj
 
-    def _syncPhotoXMLList(self, photos_xml):
+    def _syncPhotoXMLList(self, photos_xml, index=0):
         """
         Synchronize a list of flickr photos with Django ORM.
 
@@ -304,7 +305,8 @@ class FlickrSyncr:
         photo_list = []
         for photo in photos_xml:
             photo_result = self.flickr.photos_getInfo(photo_id = photo['id'])
-            photo_list.append(self._syncPhoto(photo_result))
+            photo_list.append(self._syncPhoto(photo_result, False, index))
+            index += 1
         return photo_list
 
     def syncPhoto(self, photo_id, refresh=False):
@@ -330,14 +332,14 @@ class FlickrSyncr:
         """
         nsid = self.user2nsid(username)
         count = per_page = int(self.flickr.people_getInfo(
-		user_id=nsid).person[0].photos[0].count[0].text)
+                user_id=nsid).person[0].photos[0].count[0].text)
         if count >= 500:
             per_page = 500
         pages = count // per_page
         
         for page in range(0, pages):
             result = self.flickr.people_getPublicPhotos(
-		user_id=nsid, per_page=per_page, page=page)
+                user_id=nsid, per_page=per_page, page=page)
             self._syncPhotoXMLList(result.photos[0].photo)
 
     def syncRecentPhotos(self, username, days=1):
@@ -371,7 +373,7 @@ class FlickrSyncr:
         """
         nsid = self.user2nsid(username)
         favList, created = FavoriteList.objects.get_or_create( \
-	    owner = username, defaults = {'sync_date': datetime.now()})
+            owner = username, defaults = {'sync_date': datetime.now()})
 
         result = self.flickr.favorites_getPublicList(user_id=nsid, per_page=500)
         page_count = int(result.photos[0]['pages'])
@@ -379,9 +381,9 @@ class FlickrSyncr:
             photo_list = self._syncPhotoXMLList(result.photos[0].photo)
             for photo in photo_list:
                 favList.photos.add(photo)
-		if page == 1:
-		    favList.primary = photo
-		    favList.save()
+                if page == 1:
+                    favList.primary = photo
+                    favList.save()
             result = self.flickr.favorites_getPublicList(user_id=nsid,
                         per_page=500, page=page+1)
 
@@ -397,33 +399,35 @@ class FlickrSyncr:
         username = self.flickr.people_getInfo(user_id = nsid).person[0].username[0].text
         result = self.flickr.photosets_getPhotos(photoset_id = photoset_id)
         page_count = int(result.photoset[0]['pages'])
-	primary = self.syncPhoto(photoset_xml.photoset[0]['primary'])
+        primary = self.syncPhoto(photoset_xml.photoset[0]['primary'])
 
         d_photoset, created = PhotoSet.objects.get_or_create(
                 flickr_id = photoset_id,
                 defaults = {
-			'owner': username,
-			'flickr_id': result.photoset[0]['id'],
-			'title': photoset_xml.photoset[0].title[0].text,
-			'description': photoset_xml.photoset[0].description[0].text,
-			'primary': primary,
-			'order': order
-			}
-		)
-	if not created: # update it
-	    d_photoset.owner  = username
-	    d_photoset.title  = photoset_xml.photoset[0].title[0].text
-	    d_photoset.description=photoset_xml.photoset[0].description[0].text
-	    d_photoset.primary = primary
-	    d_photoset.save()
+                        'owner': username,
+                        'flickr_id': result.photoset[0]['id'],
+                        'title': photoset_xml.photoset[0].title[0].text,
+                        'description': photoset_xml.photoset[0].description[0].text,
+                        'primary': primary,
+                        'order': order
+                        }
+                )
+        if not created: # update it
+            d_photoset.owner  = username
+            d_photoset.title  = photoset_xml.photoset[0].title[0].text
+            d_photoset.description=photoset_xml.photoset[0].description[0].text
+            d_photoset.primary = primary
+            d_photoset.save()
 
-	page_count = int(result.photoset[0]['pages'])
-	
+        page_count = int(result.photoset[0]['pages'])
+        index = 0
+        
         for page in range(1, page_count+1):
             if page > 1:
                 result = self.flickr.photosets_getPhotos(
                     photoset_id = photoset_id, page = page+1)
-            photo_list = self._syncPhotoXMLList(result.photoset[0].photo)
+                index = page * 20
+            photo_list = self._syncPhotoXMLList(result.photoset[0].photo, index)
             for photo in photo_list:
                 if photo is not None:
                     d_photoset.photos.add(photo)

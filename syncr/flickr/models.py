@@ -38,6 +38,7 @@ class Photo(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique_for_date='taken_date',
                             help_text='Automatically built from the title.')
+    order = models.IntegerField(default=0)
     description = models.TextField(blank=True)
     taken_date = models.DateTimeField()
     upload_date = models.DateTimeField() # New
