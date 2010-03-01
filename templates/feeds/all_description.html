@@ -11,7 +11,7 @@ ul {
 {% for photo in obj.photos|slice:":3" %}
 
   {% with forloop.counter as photo_order %}
-  {% for callout in callouts %}{% ifequal callout.order photo_order %}
+  {% for callout in obj.callouts %}{% ifequal callout.order photo_order %}
     <li class="callout">
       
       <div class="callout-content content">

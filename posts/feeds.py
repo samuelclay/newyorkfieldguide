@@ -1,5 +1,5 @@
 from django.contrib.syndication.feeds import Feed
-from posts.models import Post
+from posts.models import Post, Callout
 from django.core.urlresolvers import reverse
 
 class LatestEntriesFeed(Feed):
@@ -11,7 +11,11 @@ class LatestEntriesFeed(Feed):
     item_author_link = "http://www.samuelclay.com"
         
     def items(self):
-        return [{'photos': obj.photo_set.photos.all().order_by('order'), 'post': obj} for obj in Post.public.order_by('-publish_date')[:20]]
+        return [{
+            'photos': obj.photo_set.photos.all().order_by('order'), 
+            'post': obj,
+            'callouts': Callout.objects.filter(post=obj)
+        } for obj in Post.public.order_by('-publish_date')[:20]]
         
     def item_link(self, item):
         return item['post'].get_absolute_url()
