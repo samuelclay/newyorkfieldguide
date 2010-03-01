@@ -4,7 +4,6 @@ from django.core.urlresolvers import reverse
 
 class LatestEntriesFeed(Feed):
     title = "New York Field Guide"
-    link = '/'
     description = "The Historic Districts of New York City."
 
     item_author_name = "Samuel Clay"
