@@ -5,13 +5,14 @@ from django.core.urlresolvers import reverse
 class LatestEntriesFeed(Feed):
     title = "New York Field Guide"
     description = "The Historic Districts of New York City."
-
+    link = 'http://www.newyorkfieldguide.com/'
+    
     item_author_name = "Samuel Clay"
     item_author_link = "http://www.samuelclay.com"
         
     def items(self):
         return [{'photos': obj.photo_set.photos.all().order_by('order'), 'post': obj} for obj in Post.public.order_by('-publish_date')[:20]]
-
+        
     def item_link(self, item):
         return item['post'].get_absolute_url()
         
