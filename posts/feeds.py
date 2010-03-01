@@ -28,3 +28,6 @@ class LatestEntriesFeed(Feed):
         
     def item_pubdate(self,item):
         return item['post'].publish_date
+        
+    def item_categories(self, item):
+        return (item.borough,)
