@@ -1,0 +1,40 @@
+<h2><a href="{{ obj.post.get_absolute_url }}">{{ obj.photos|length }} Photos - {{ obj.post.title }}</a></h2>
+<h3>{{ obj.post.subtitle }}</h3>
+
+<ul class="photoset-photos">
+{% for photo in obj.photos|slice:":3" %}
+
+  {% with forloop.counter as photo_order %}
+  {% for callout in callouts %}{% ifequal callout.order photo_order %}
+    <li class="callout">
+      
+      <div class="callout-content content">
+        {% if callout.detail_image_url %}
+          <div class="callout-image"><img src="{{ callout.detail_image_url}}" /></div>
+        {% endif %}
+        {% if callout.date %}
+          <div class="callout-date">{{ callout.date|date:"F d"}}<span class="nth">{{ callout.date|date:"S" }}</span>, {{ callout.date|date:"Y" }}</div>
+        {% endif %}
+        <div class="callout-content">
+          {{ callout.content|safe }}
+        </div>
+        {% if callout.link %}
+          <div class="callout-link"><a href="{{ callout.link }}">{{ callout.link }}</a></div>
+        {% endif %}
+        {% if callout.quote_speaker %}
+          <div class="callout-quote-speaker">{{ callout.quote_speaker }}</div>
+        {% endif %}
+      </div>
+      
+    </li>
+  {% endifequal %}{% endfor %}
+  {% endwith %}
+  
+  <li class="photo-detail content">
+    <img src="{{ photo.get_large_url }}" />
+  </li>
+  
+{% endfor %}  
+</ul>
+
+<h2><a href="{{ obj.post.get_absolute_url }}">{{ obj.photos|length }} Photos - {{ obj.post.title }}</a></h2>
