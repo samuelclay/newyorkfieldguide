@@ -30,4 +30,4 @@ class LatestEntriesFeed(Feed):
         return item['post'].publish_date
         
     def item_categories(self, item):
-        return (item.borough,)
+        return (item['post'].borough,)
