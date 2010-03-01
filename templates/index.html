@@ -6,34 +6,50 @@
 {% filter typogrify %}
   <div id="splash">
     
-    <ul class="posts photosets">
-      {% for post in posts %}
-        <li class="photoset content">
+    {% regroup posts by get_borough_display as boroughs %}
+    
+    {% for borough in boroughs %}
+      <ul>
+        <li class="callout">
           
-          {% photoset_info post %}
-          
-          <div class="photoset-photos photo-thumbs">
-            {% photo_thumbs post 4 12 %}
-          </div>
-          
-          <div class="photoset-map-container">
-            <script>
-            $(document).ready(function() {
-                  var map = new GMap2(document.getElementById("map_canvas_{{ forloop.counter }}")); 
-                  var geoXml = new GGeoXml("http://maps.google.com/maps/ms?ie=UTF8&hl=en&msa=0&output=nl&msid=116208418513892880794.000480206e4027e04ae53");
-                  map.addControl(new GSmallZoomControl3D());
-                  map.setMapType(G_PHYSICAL_MAP);
-                  map.setCenter(new GLatLng({{ post.coordinates }}), {{ post.zoom }}); 
-                  map.addOverlay(geoXml);
-            });
-            </script>
-            <div id="map_canvas_{{ forloop.counter }}" class="photoset-map"></div>
+          <div class="callout-content content">
+            <div class="callout-content">
+              {{ borough.grouper|capfirst }}
+            </div>
           </div>
           
         </li>
-      {% endfor %}
-    </ul>
+      </ul>
+      
+      <ul class="posts photosets">
+        {% for post in borough.list %}
+          <li class="photoset content">
+          
+            {% photoset_info post %}
+          
+            <div class="photoset-photos photo-thumbs">
+              {% photo_thumbs post 4 12 %}
+            </div>
+          
+            <div class="photoset-map-container">
+              <script>
+              $(document).ready(function() {
+                    var map = new GMap2(document.getElementById("map_canvas_{{ forloop.counter }}")); 
+                    var geoXml = new GGeoXml("http://maps.google.com/maps/ms?ie=UTF8&hl=en&msa=0&output=nl&msid=116208418513892880794.000480206e4027e04ae53");
+                    map.addControl(new GSmallZoomControl3D());
+                    map.setMapType(G_PHYSICAL_MAP);
+                    map.setCenter(new GLatLng({{ post.coordinates }}), {{ post.zoom }}); 
+                    map.addOverlay(geoXml);
+              });
+              </script>
+              <div id="map_canvas_{{ forloop.counter }}" class="photoset-map"></div>
+            </div>
+          
+          </li>
+        {% endfor %}
+      </ul>
   
+    {% endfor %}
   </div>
 
 {% endfilter %}

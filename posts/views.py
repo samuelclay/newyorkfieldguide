@@ -6,7 +6,7 @@ from syncr.flickr.models import PhotoSet
 
 
 def index(request):
-    posts = Post.public.all()
+    posts = Post.public.all().order_by('borough', '-publish_date')
     
     return respond(request, 'index.html', {
         'posts': posts,

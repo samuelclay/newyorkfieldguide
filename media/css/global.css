@@ -96,6 +96,10 @@ ul {
     margin: 0 auto 48px auto;
 }
 
+#splash .callout {
+    margin: 0 0 48px 0;
+    font-weight: bold;
+}
 
 /* Photoset Info */
 
