@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load compressed typogrify post_tags %}
 
+{% block title %}{{ post.title }} - New York Field Guide{% endblock title %}
+
 {% block content %}
 
 {% filter typogrify %}
