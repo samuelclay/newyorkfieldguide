@@ -233,14 +233,10 @@ FIELDGUIDE.log = function(msg) {
 (function($) {
     $(document).ready(function() {
         $(".photo-thumbs img").hover(function() {
-            var $info = $(this).parents('.photo-thumbs')
-                               .prevAll('.photoset-info')
-                               .find('.photoset-title');            
+            var $info = $(this).parents('.photoset');            
             $info.addClass('hover');
         }, function() {
-            var $info = $(this).parents('.photo-thumbs')
-                               .prevAll('.photoset-info')
-                               .find('.photoset-title');
+            var $info = $(this).parents('.photoset');            
             $info.removeClass('hover');
         });
     

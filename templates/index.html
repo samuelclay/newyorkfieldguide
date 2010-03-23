@@ -6,24 +6,12 @@
 {% filter typogrify %}
   <div id="splash">
     
-    {% regroup posts by get_borough_display as boroughs %}
-    
-    {% for borough in boroughs %}
-      <ul>
-        <li class="callout">
-          
-          <div class="callout-content content">
-            <div class="callout-content">
-              {{ borough.grouper|capfirst }}
-            </div>
-          </div>
-          
-        </li>
-      </ul>
       
       <ul class="posts photosets">
-        {% for post in borough.list %}
+        {% for post in posts %}
           <li class="photoset content">
+            
+            <div class="photoset-borough">{{ post.get_borough_display }}</div>
           
             {% photoset_info post %}
           
@@ -49,7 +37,6 @@
         {% endfor %}
       </ul>
   
-    {% endfor %}
   </div>
 
 {% endfilter %}

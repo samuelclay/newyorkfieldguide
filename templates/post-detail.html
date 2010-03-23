@@ -9,6 +9,7 @@
   <div class="photoset-detail">
 
     <div class="content">
+      <div class="photoset-borough">{{ post.get_borough_display }}</div>
       {% photoset_info post %}
     </div>
     
@@ -74,7 +75,7 @@
 {% block footer_post_borough %}
   {% if footer_post_borough %}
     <div class="footer-post-subtitle">Elsewhere in {{ footer_post_borough.get_borough_display }}...</div>
-    {% photoset_info footer_post_borough %}
+    {% photoset_info footer_post_borough 1 %}
     <div class="footer-photos photo-thumbs">
       {% photo_thumbs footer_post_borough 4 8 %}
     </div>
@@ -84,7 +85,7 @@
 {% block footer_post_elsewhere %}
   {% if footer_post_elsewhere %}
     <div class="footer-post-subtitle">Elsewhere in New York City...</div>
-    {% photoset_info footer_post_elsewhere %}
+    {% photoset_info footer_post_elsewhere 1 %}
     <div class="footer-photos photo-thumbs">
       {% photo_thumbs footer_post_elsewhere 4 8 %}
     </div>

@@ -8,8 +8,9 @@ def highlight(text, word):
     return mark_safe(text.replace(word, "<span class='highlight'>%s</span>" % word))
    
 @register.inclusion_tag('photoset_info.html')
-def photoset_info(post):
-    return {'post': post}
+def photoset_info(post, hide_subtitle=False):
+    return {'post': post,
+            'hide_subtitle': hide_subtitle,}
     
 @register.inclusion_tag('photo_thumbs.html')
 def photo_thumbs(post, per_row=4, total=12):

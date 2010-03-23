@@ -81,7 +81,7 @@ ul {
 
 .photosets .photoset-info a:hover,
 .photoset-info a:hover,
-.photoset-info .photoset-title.hover a {
+.photoset.hover .photoset-info .photoset-title a {
     color: #D44619;
     text-decoration: none;
 }
@@ -93,7 +93,8 @@ ul {
 .photoset {
     clear: both;
     overflow: hidden;
-    margin: 0 auto 48px auto;
+    margin: 0 auto 48px;
+    position: relative;
 }
 
 #splash .callout {
@@ -101,12 +102,25 @@ ul {
     font-weight: bold;
 }
 
+.photoset-borough {
+    color: #232323;
+    font-size: 92px;
+    font-weight: bold;
+    right: -5px;
+    line-height: 76px;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
+
 /* Photoset Info */
 
 .photoset-info {
     padding: 0 0 4px 0;
-    margin: 12px 0 8px;
+    margin: 48px 0 18px;
     border-bottom: 1px solid #606060;
+    z-index: 2;
+    position: relative;
 }
 
 .photoset-info .photoset-title {
@@ -128,11 +142,13 @@ ul {
     font-size: 12px;
     line-height: 28px;
     text-transform: uppercase;
+    z-index: 2;
 }
 
 .photoset-info .photoset-count-number {
     font-weight: bold;
 }
+
 
 /* Photoset Photos */
 
@@ -142,6 +158,7 @@ ul {
     margin-left: 24px;
     position: relative;
     float: left;
+    z-index: 2;
 }
 
 .photo-thumbs img {
@@ -184,7 +201,7 @@ ul {
 
 
 .photoset-detail .photoset-photos .photo-detail {
-    margin: 48px auto;
+    margin: 24px auto 48px auto;
 }
 
 .photoset-detail .photoset-photos .photo-detail img {
@@ -266,6 +283,7 @@ ul {
     width: 366px;
     float: left;
     margin: 24px 0;
+    clear: none;
 }
 
 .footer-post.last {
