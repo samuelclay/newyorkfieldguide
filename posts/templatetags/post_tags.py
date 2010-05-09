@@ -14,7 +14,7 @@ def photoset_info(post, hide_subtitle=False):
     
 @register.inclusion_tag('photo_thumbs.html')
 def photo_thumbs(post, per_row=4, total=12):
-    photos = post.photo_set.photos.all()[0:total]
+    photos = post.photo_set.photos.all().order_by('-order')[0:total]
     
     return {
         'post': post,
