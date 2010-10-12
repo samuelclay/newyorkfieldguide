@@ -1,11 +1,11 @@
 {% load post_tags %}
             
 <div class="photoset-info">
-  <div class="photoset-title">
+  <h2 class="photoset-title">
     {% filter highlight:'Historic District' %}
       <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
     {% endfilter %}
-  </div>
+  </h2>
   {% if not hide_subtitle %}<div class="photoset-subtitle">{{ post.subtitle }}</div>{% endif %}
   <div class="photoset-count"><span class="photoset-count-number">{{ post.photo_set.photos.count }}</span> photos</div>
 </div>

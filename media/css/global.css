@@ -127,6 +127,9 @@ ul {
     font-size: 20px;
     font-weight: bold;
     display: inline;
+    margin: 0;
+    padding: 0;
+    line-height: inherit;
 }
 
 .photoset-info .photoset-subtitle {
