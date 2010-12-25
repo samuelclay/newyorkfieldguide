@@ -212,16 +212,31 @@ ul {
     min-height: 200px;
 }
 
-.photoset-detail .photoset-photos .photo-detail .photo-detail-description {
-    margin: 8px 0 0 0;
+.photoset-detail .photoset-photos .photo-detail .photo-detail-description,
+.photoset-detail .photoset-photos .photo-detail .photo-detail-description p {
+    margin: 8px 0 2px 0;
     font-size: 17px;
-    color: #B0B0B0;
+    line-height: 20px;
+    color: #D0D0D0;
+}
+
+.photoset-detail .photoset-photos .photo-detail .photo-detail-date {
+    clear: both;
+    float: left;
+    color: #303030;
+    margin: 2px 0 0 0;
+    font-size: 10px;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+.photoset-detail .photoset-photos .photo-detail .photo-detail-date:hover {
+    color: #2E4BA5;
 }
 
 .photoset-detail .photoset-photos .photo-detail .photo-detail-exif {
     margin: 2px 0 0 0;
     font-size: 10px;
-    color: #808080;
+    color: #303030;
     float: right;
     text-decoration: none;
     visibility: hidden;
@@ -235,20 +250,7 @@ ul {
     font-weight: normal;
 }
 .photoset-detail .photoset-photos .photo-detail .photo-detail-exif:hover {
-    color: #B0B0B0;
-}
-
-.photoset-detail .photoset-photos .photo-detail .photo-detail-date {
-    clear: both;
-    float: left;
-    color: #808080;
-    margin: 2px 0 0 0;
-    font-size: 10px;
-    text-transform: uppercase;
-    text-decoration: none;
-}
-.photoset-detail .photoset-photos .photo-detail .photo-detail-date:hover {
-    color: #B0B0B0;
+    color: #2E4BA5;
 }
 
 /* Photoset Map */

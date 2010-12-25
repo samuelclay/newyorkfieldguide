@@ -76,3 +76,4 @@ class Callout(models.Model):
             self.order,
             self.post,
         )
+        

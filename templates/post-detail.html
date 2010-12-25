@@ -44,7 +44,9 @@
       
       <li class="photo-detail content">
         <img src="{{ photo.get_large_url }}" />
-        {# <div class="photo-detail-description">Four doors in a row show how some doors can be attached later in the season.</div> #}
+        {% if photo.description and 'historic district' not in photo.description %}
+          <div class="photo-detail-description">{{ photo.description|safe }}</div>
+        {% endif %}
         <a href="{{ photo.photopage_url }}" title="{{ photo.title }} at Flickr" class="photo-detail-date">{{ photo.taken_date|date:"F j, Y"}}</a>
         <a href="{{ photo.photopage_url }}" title="{{ photo.title }} at Flickr" class="photo-detail-exif">
           {{ photo.exif_make }} {{ photo.exif_model }} with {{ photo.exif_focal_length }} at <b>{{ photo.exif_aperture }}</b>, <b>ISO {{ photo.exif_iso }}</b>, {{ photo.exif_exposure }}
