@@ -24,7 +24,7 @@ MEDIA_ROOT = here('media')
 MEDIA_URL = '/media/'
 ADMIN_MEDIA_PREFIX = '/media/admin/'
 ROOT_URLCONF = 'urls'
-
+PREPEND_WWW = False
 if not DEBUG:
     PREPEND_WWW = True
     APPEND_SLASH = True

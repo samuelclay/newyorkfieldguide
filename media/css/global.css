@@ -202,16 +202,54 @@ ul {
     
 }
 
-
 .photoset-detail .photoset-photos .photo-detail {
     margin: 24px auto 48px auto;
 }
 
 .photoset-detail .photoset-photos .photo-detail img {
-    max-width: 798px;
+    width: 798px;
     border: 1px solid #000;
+    min-height: 200px;
 }
 
+.photoset-detail .photoset-photos .photo-detail .photo-detail-description {
+    margin: 8px 0 0 0;
+    font-size: 17px;
+    color: #B0B0B0;
+}
+
+.photoset-detail .photoset-photos .photo-detail .photo-detail-exif {
+    margin: 2px 0 0 0;
+    font-size: 10px;
+    color: #808080;
+    float: right;
+    text-decoration: none;
+    visibility: hidden;
+}
+
+.photoset-detail .photoset-photos .photo-detail:hover .photo-detail-exif {
+    visibility: visible;
+}
+
+.photoset-detail .photoset-photos .photo-detail .photo-detail-exif b {
+    font-weight: normal;
+}
+.photoset-detail .photoset-photos .photo-detail .photo-detail-exif:hover {
+    color: #B0B0B0;
+}
+
+.photoset-detail .photoset-photos .photo-detail .photo-detail-date {
+    clear: both;
+    float: left;
+    color: #808080;
+    margin: 2px 0 0 0;
+    font-size: 10px;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+.photoset-detail .photoset-photos .photo-detail .photo-detail-date:hover {
+    color: #B0B0B0;
+}
 
 /* Photoset Map */
 
