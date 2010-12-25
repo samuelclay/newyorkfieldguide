@@ -44,7 +44,7 @@
       
       <li class="photo-detail content">
         <img src="{{ photo.get_large_url }}" />
-        {% if photo.description and 'historic district' not in photo.description %}
+        {% if photo.description and 'Part of New York Field Guide' not in photo.description %}
           <div class="photo-detail-description">{{ photo.description|safe }}</div>
         {% endif %}
         <a href="{{ photo.photopage_url }}" title="{{ photo.title }} at Flickr" class="photo-detail-date">{{ photo.taken_date|date:"F j, Y"}}</a>
