@@ -5,3 +5,5 @@ local_settings.py
 logs*
 media/*/*.r*.*
 media/media
+logs
+

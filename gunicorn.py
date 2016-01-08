@@ -1,0 +1,14 @@
+bind = "0.0.0.0:5000"
+pidfile = "/srv/newyorkfieldguide/logs/gunicorn.pid"
+logfile = "/srv/newyorkfieldguide/logs/production.log"
+accesslog = "/srv/newyorkfieldguide/logs/production.log"
+errorlog = "/srv/newyorkfieldguide/logs/errors.log"
+loglevel = "debug"
+name = "newyorkfieldguide"
+timeout = 120
+max_requests = 1000
+x_forwarded_for_header = "X-FORWARDED-FOR"
+forwarded_allow_ips = "*"
+limit_request_line = 16000
+limit_request_fields = 1000
+workers = 2
