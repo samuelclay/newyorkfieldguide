@@ -25,10 +25,7 @@ class BigIntegerField(models.IntegerField):
         return 'BigIntegerField'
 
     def db_type(self, connection):
-        if settings.DATABASE_ENGINE == 'oracle':
-            db_type = 'NUMBER(19)'
-        else:
-            db_type = 'bigint'
+        db_type = 'bigint'
         return db_type
 
 class Photo(models.Model):
