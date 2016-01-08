@@ -24,7 +24,7 @@ class BigIntegerField(models.IntegerField):
     def get_internal_type(self):
         return 'BigIntegerField'
 
-    def db_type(self):
+    def db_type(self, connection):
         if settings.DATABASE_ENGINE == 'oracle':
             db_type = 'NUMBER(19)'
         else:
