@@ -17,7 +17,7 @@
 <body>
   <div id="header" class="content">
     <div class="splash-header">
-      <h1 class="splash-big"><a href="{% url index %}">New York <span class="highlight highlight-title">Field Guide</span></a></h1>
+      <h1 class="splash-big"><a href="{% url "index" %}">New York <span class="highlight highlight-title">Field Guide</span></a></h1>
       <h3 class="splash-small">Historic Districts <span class="highlight highlight-title">of</span> New York City</h3>  
     </div>
   </div>
@@ -28,7 +28,7 @@
   
   <div id="footer" class="content">
     <div class="footer-info">
-      <b><a href="{% url index %}">New York <span class="highlight highlight-title">Field Guide</span></a></b> is curated and researched by <b><a href="http://www.samuelclay.com">Samuel Clay</a></b>.
+      <b><a href="{% url "index" %}">New York <span class="highlight highlight-title">Field Guide</span></a></b> is curated and researched by <b><a href="http://www.samuelclay.com">Samuel Clay</a></b>.
     </div>
     <div class="footer-post photoset">
       {% block footer_post_borough %}{% endblock footer_post_borough %}
