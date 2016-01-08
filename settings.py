@@ -7,7 +7,7 @@ here = lambda x: os.path.join(os.path.abspath(os.path.dirname(__file__)), x)
 # = Globals =
 # ===========
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -24,8 +24,11 @@ MEDIA_ROOT = here('media')
 MEDIA_URL = '/media/'
 ADMIN_MEDIA_PREFIX = '/media/admin/'
 ROOT_URLCONF = 'urls'
-
-
+PREPEND_WWW = False
+if not DEBUG:
+    PREPEND_WWW = True
+    APPEND_SLASH = True
+    
 # ============
 # = Database =
 # ============
