@@ -119,7 +119,7 @@ class Photo(models.Model):
 
     def get_large_url(self):
         if self.has_large_photo:
-            if self.upload_date < datetime.datetime(2010, 5, 1):
+            if self.taken_date < datetime.datetime(2010, 5, 1):
                 return self._get_photo_url_helper('z')
             else:
                 return self._get_photo_url_helper('b')
