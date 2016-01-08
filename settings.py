@@ -33,12 +33,13 @@ if not DEBUG:
 # = Database =
 # ============
 
-DATABASE_ENGINE = 'mysql'
-DATABASE_NAME = 'fieldguide'
-DATABASE_USER = 'fieldguide'
-DATABASE_PASSWORD = ''
-DATABASE_HOST = 'localhost'
-DATABASE_PORT = ''
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'clay.db',
+    }
+}
+CACHE_BACKEND = "db://cache"
 
 
 # ======================
