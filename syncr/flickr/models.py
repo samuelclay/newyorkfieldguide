@@ -118,7 +118,7 @@ class Photo(models.Model):
 
     def get_large_url(self):
         if self.has_large_photo:
-            return self._get_photo_url_helper('b')
+            return self._get_photo_url_helper('z')
         return self.get_original_url()
 
     def get_original_url(self):
