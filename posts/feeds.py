@@ -1,4 +1,4 @@
-from django.contrib.syndication.feeds import Feed
+from django.contrib.syndication.views import Feed
 from posts.models import Post, Callout
 from django.core.urlresolvers import reverse
 
