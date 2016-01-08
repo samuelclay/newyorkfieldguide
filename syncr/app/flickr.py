@@ -311,8 +311,12 @@ class FlickrSyncr:
         photo_list = []
         for photo in photos_xml:
             print photo
-            photo_result = self.flickr.photos_getInfo(photo_id = photo['id'])
-            photo_list.append(self._syncPhoto(photo_result))
+            try:
+                photo_result = self.flickr.photos_getInfo(photo_id = photo['id'])
+                photo_list.append(self._syncPhoto(photo_result))
+            except Exception, e:
+                print " ***> %s" % e
+                continue
             print " ---> Photo: %s" % photo_result
         return photo_list
 
