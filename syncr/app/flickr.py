@@ -62,8 +62,12 @@ class FlickrSyncr:
         # Set values given by flickr
         for el in result.sizes[0].size:
             size = el['label']
-            if size == 'Medium 640':
+            if 'Medium' in size:
                 size = 'Medium'
+            elif 'Small' in size:
+                size = 'Small'
+            elif 'Large' in size:
+                size = 'Large'
             sizes[size]['width'] = el['width']
             sizes[size]['height'] = el['height']
         return sizes
@@ -178,7 +182,7 @@ class FlickrSyncr:
         except KeyError:
             return ''
 
-    def _syncPhoto(self, photo_xml, refresh=False, index=0):
+    def _syncPhoto(self, photo_xml, refresh=False):
         """
         Synchronize a flickr photo with the Django backend.
 
@@ -199,8 +203,8 @@ class FlickrSyncr:
 
         sizes = self.getPhotoSizes(photo_id)
         # Removed urls = self.getPhotoSizeURLs(photo_id)
-        exif_data = self.getExifInfo(photo_id)
-        geo_data = self.getGeoLocation(photo_id)
+        # exif_data = self.getExifInfo(photo_id)
+        # geo_data = self.getGeoLocation(photo_id)
 
         taken_date = datetime(*strptime(photo_xml.photo[0].dates[0]['taken'], "%Y-%m-%d %H:%M:%S")[:7])
         upload_date = datetime.fromtimestamp(int(photo_xml.photo[0].dates[0]['posted']))
@@ -231,7 +235,6 @@ class FlickrSyncr:
             'owner_nsid': photo_xml.photo[0].owner[0]['nsid'],
             'title': photo_xml.photo[0].title[0].text, # TODO: Typography
             'slug': slug,
-            'order': index,
             'description': photo_xml.photo[0].description[0].text,
             'taken_date': taken_date,
             'upload_date': upload_date,
@@ -257,31 +260,31 @@ class FlickrSyncr:
             # Removed 'thumbnail_url': urls['Thumbnail'],
             'tags': tags,
             'license': photo_xml.photo[0]['license'],
-            'geo_latitude': geo_data['latitude'],
-            'geo_longitude': geo_data['longitude'],
-            'geo_accuracy': geo_data['accuracy'],
-            'geo_locality': geo_data['locality'],
-            'geo_county': geo_data['county'],
-            'geo_region': geo_data['region'],
-            'geo_country': geo_data['country'],
-            'exif_model': self.getExifKey(exif_data, 'Model'),
-            'exif_make': self.getExifKey(exif_data, 'Make'),
-            'exif_orientation': self.getExifKey(exif_data, 'Orientation'),
-            'exif_exposure': self.getExifKey(exif_data, 'Exposure'),
-            'exif_software': self.getExifKey(exif_data, 'Software'),
-            'exif_aperture': self.getExifKey(exif_data, 'Aperture'),
-            'exif_iso': self.getExifKey(exif_data, 'ISO Speed'),
-            'exif_metering_mode': self.getExifKey(exif_data, 'Metering Mode'),
-            'exif_flash': self.getExifKey(exif_data, 'Flash'),
-            'exif_focal_length': self.getExifKey(exif_data, 'Focal Length'),
-            'exif_color_space': self.getExifKey(exif_data, 'Color Space'),
+            # 'geo_latitude': geo_data['latitude'],
+            # 'geo_longitude': geo_data['longitude'],
+            # 'geo_accuracy': geo_data['accuracy'],
+            # 'geo_locality': geo_data['locality'],
+            # 'geo_county': geo_data['county'],
+            # 'geo_region': geo_data['region'],
+            # 'geo_country': geo_data['country'],
+            # 'exif_model': self.getExifKey(exif_data, 'Model'),
+            # 'exif_make': self.getExifKey(exif_data, 'Make'),
+            # 'exif_orientation': self.getExifKey(exif_data, 'Orientation'),
+            # 'exif_exposure': self.getExifKey(exif_data, 'Exposure'),
+            # 'exif_software': self.getExifKey(exif_data, 'Software'),
+            # 'exif_aperture': self.getExifKey(exif_data, 'Aperture'),
+            # 'exif_iso': self.getExifKey(exif_data, 'ISO Speed'),
+            # 'exif_metering_mode': self.getExifKey(exif_data, 'Metering Mode'),
+            # 'exif_flash': self.getExifKey(exif_data, 'Flash'),
+            # 'exif_focal_length': self.getExifKey(exif_data, 'Focal Length'),
+            # 'exif_color_space': self.getExifKey(exif_data, 'Color Space'),
         }
 
         obj, created = Photo.objects.get_or_create(
             flickr_id = photo_xml.photo[0]['id'], defaults=default_dict)
 
         # update if something changed
-        if obj.update_date < update_date or obj.order != index:
+        if obj.update_date < update_date:
             # Never overwrite URL-relevant attributes
             default_dict['slug'] = obj.slug
             default_dict['taken_date'] = obj.taken_date
@@ -298,7 +301,7 @@ class FlickrSyncr:
                                         flickr_id=c['flickr_id'], defaults=c)
         return obj
 
-    def _syncPhotoXMLList(self, photos_xml, index=0):
+    def _syncPhotoXMLList(self, photos_xml):
         """
         Synchronize a list of flickr photos with Django ORM.
 
@@ -307,9 +310,10 @@ class FlickrSyncr:
         """
         photo_list = []
         for photo in photos_xml:
+            print photo
             photo_result = self.flickr.photos_getInfo(photo_id = photo['id'])
-            photo_list.append(self._syncPhoto(photo_result, False, index))
-            index += 1
+            photo_list.append(self._syncPhoto(photo_result))
+            print " ---> Photo: %s" % photo_result
         return photo_list
 
     def syncPhoto(self, photo_id, refresh=False):
@@ -335,14 +339,14 @@ class FlickrSyncr:
         """
         nsid = self.user2nsid(username)
         count = per_page = int(self.flickr.people_getInfo(
-                user_id=nsid).person[0].photos[0].count[0].text)
+		user_id=nsid).person[0].photos[0].count[0].text)
         if count >= 500:
             per_page = 500
         pages = count // per_page
         
         for page in range(0, pages):
             result = self.flickr.people_getPublicPhotos(
-                user_id=nsid, per_page=per_page, page=page)
+		user_id=nsid, per_page=per_page, page=page)
             self._syncPhotoXMLList(result.photos[0].photo)
 
     def syncRecentPhotos(self, username, days=1):
@@ -368,6 +372,54 @@ class FlickrSyncr:
             result = self.flickr.photos_search(user_id=nsid, page=page+1,
                         per_page=500, min_upload_date=timestamp)
 
+    def syncMinimal(self, username, days=1):
+        """
+        Synchronize recent public photos from a flickr user.
+
+        Required arguments
+          username: a flickr username as a string
+        Optional arguments
+          days: sync photos since this number of days, defaults
+                to 1 (yesterday)
+        """
+        syncSince = datetime.now() - timedelta(days=days)
+        timestamp = calendar.timegm(syncSince.timetuple())
+        nsid = self.user2nsid(username)
+
+        result = self.flickr.photos_search(user_id=nsid, per_page=500,
+                                           min_upload_date=timestamp)
+        page_count = result.photos[0]['pages']
+
+        for page in range(1, int(page_count)+1):
+            for photo in result.photos[0].photo:
+                default_dict = {
+                    'title': photo['title'],
+                    'farm': photo['farm'],
+                    'server': photo['server'],
+                    'secret': photo['secret'],
+                    'taken_date': datetime.now(),
+                    'upload_date': datetime.now(),
+                    'update_date': datetime.now(),
+                    'photopage_url': "http://www.flickr.com/photos/conesus/%s" % photo['id'],
+                    'original_secret': "",
+                    'thumbnail_width': 0,
+                    'thumbnail_height': 0,
+                    'small_width': 0,
+                    'small_height': 0,
+                    'medium_width': 0,
+                    'medium_height': 0,
+                    'large_width': 0,
+                    'large_height': 0,
+                    'original_width': 0,
+                    'original_height': 0,
+                    'license': 0,
+                    
+                }
+                photo_db, created = Photo.objects.get_or_create(
+                    flickr_id = photo['id'],
+                    defaults=default_dict)
+                print " ---> %s: %s" % (photo_db.title, "NEW" if created else "already saved")
+
     def syncPublicFavorites(self, username):
         """Synchronize a flickr user's public favorites.
 
@@ -376,7 +428,7 @@ class FlickrSyncr:
         """
         nsid = self.user2nsid(username)
         favList, created = FavoriteList.objects.get_or_create( \
-            owner = username, defaults = {'sync_date': datetime.now()})
+	    owner = username, defaults = {'sync_date': datetime.now()})
 
         result = self.flickr.favorites_getPublicList(user_id=nsid, per_page=500)
         page_count = int(result.photos[0]['pages'])
@@ -384,9 +436,9 @@ class FlickrSyncr:
             photo_list = self._syncPhotoXMLList(result.photos[0].photo)
             for photo in photo_list:
                 favList.photos.add(photo)
-                if page == 1:
-                    favList.primary = photo
-                    favList.save()
+		if page == 1:
+		    favList.primary = photo
+		    favList.save()
             result = self.flickr.favorites_getPublicList(user_id=nsid,
                         per_page=500, page=page+1)
 
@@ -402,35 +454,33 @@ class FlickrSyncr:
         username = self.flickr.people_getInfo(user_id = nsid).person[0].username[0].text
         result = self.flickr.photosets_getPhotos(photoset_id = photoset_id)
         page_count = int(result.photoset[0]['pages'])
-        primary = self.syncPhoto(photoset_xml.photoset[0]['primary'])
+	primary = self.syncPhoto(photoset_xml.photoset[0]['primary'])
 
         d_photoset, created = PhotoSet.objects.get_or_create(
                 flickr_id = photoset_id,
                 defaults = {
-                        'owner': username,
-                        'flickr_id': result.photoset[0]['id'],
-                        'title': photoset_xml.photoset[0].title[0].text,
-                        'description': photoset_xml.photoset[0].description[0].text,
-                        'primary': primary,
-                        'order': order
-                        }
-                )
-        if not created: # update it
-            d_photoset.owner  = username
-            d_photoset.title  = photoset_xml.photoset[0].title[0].text
-            d_photoset.description=photoset_xml.photoset[0].description[0].text
-            d_photoset.primary = primary
-            d_photoset.save()
+			'owner': username,
+			'flickr_id': result.photoset[0]['id'],
+			'title': photoset_xml.photoset[0].title[0].text,
+			'description': photoset_xml.photoset[0].description[0].text,
+			'primary': primary,
+			'order': order
+			}
+		)
+	if not created: # update it
+	    d_photoset.owner  = username
+	    d_photoset.title  = photoset_xml.photoset[0].title[0].text
+	    d_photoset.description=photoset_xml.photoset[0].description[0].text
+	    d_photoset.primary = primary
+	    d_photoset.save()
 
-        page_count = int(result.photoset[0]['pages'])
-        index = 0
-        
+	page_count = int(result.photoset[0]['pages'])
+	
         for page in range(1, page_count+1):
             if page > 1:
                 result = self.flickr.photosets_getPhotos(
                     photoset_id = photoset_id, page = page+1)
-                index = page * 20
-            photo_list = self._syncPhotoXMLList(result.photoset[0].photo, index)
+            photo_list = self._syncPhotoXMLList(result.photoset[0].photo)
             for photo in photo_list:
                 if photo is not None:
                     d_photoset.photos.add(photo)
