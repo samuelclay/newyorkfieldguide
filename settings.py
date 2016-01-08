@@ -46,11 +46,10 @@ CACHE_BACKEND = "db://cache"
 # = Django Integration =
 # ======================
 
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.load_template_source',
-    'django.template.loaders.app_directories.load_template_source',
-    'django.template.loaders.eggs.load_template_source',
-)
+TEMPLATE_LOADERS = [
+'django.template.loaders.filesystem.Loader',
+'django.template.loaders.app_directories.Loader',      
+]
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
